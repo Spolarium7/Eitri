@@ -1,0 +1,11 @@
+C:\Users\goshe\Documents\Projects\eitri\GoshenJimenez.Eitri\GoshenJimenez.Eitri\bin\Debug\netcoreapp2.0\GoshenJimenez.Eitri.deps.json
+C:\Users\goshe\Documents\Projects\eitri\GoshenJimenez.Eitri\GoshenJimenez.Eitri\bin\Debug\netcoreapp2.0\GoshenJimenez.Eitri.runtimeconfig.json
+C:\Users\goshe\Documents\Projects\eitri\GoshenJimenez.Eitri\GoshenJimenez.Eitri\bin\Debug\netcoreapp2.0\GoshenJimenez.Eitri.runtimeconfig.dev.json
+C:\Users\goshe\Documents\Projects\eitri\GoshenJimenez.Eitri\GoshenJimenez.Eitri\bin\Debug\netcoreapp2.0\GoshenJimenez.Eitri.dll
+C:\Users\goshe\Documents\Projects\eitri\GoshenJimenez.Eitri\GoshenJimenez.Eitri\bin\Debug\netcoreapp2.0\GoshenJimenez.Eitri.pdb
+C:\Users\goshe\Documents\Projects\eitri\GoshenJimenez.Eitri\GoshenJimenez.Eitri\obj\Debug\netcoreapp2.0\GoshenJimenez.Eitri.csprojAssemblyReference.cache
+C:\Users\goshe\Documents\Projects\eitri\GoshenJimenez.Eitri\GoshenJimenez.Eitri\obj\Debug\netcoreapp2.0\GoshenJimenez.Eitri.csproj.CoreCompileInputs.cache
+C:\Users\goshe\Documents\Projects\eitri\GoshenJimenez.Eitri\GoshenJimenez.Eitri\obj\Debug\netcoreapp2.0\GoshenJimenez.Eitri.AssemblyInfoInputs.cache
+C:\Users\goshe\Documents\Projects\eitri\GoshenJimenez.Eitri\GoshenJimenez.Eitri\obj\Debug\netcoreapp2.0\GoshenJimenez.Eitri.AssemblyInfo.cs
+C:\Users\goshe\Documents\Projects\eitri\GoshenJimenez.Eitri\GoshenJimenez.Eitri\obj\Debug\netcoreapp2.0\GoshenJimenez.Eitri.dll
+C:\Users\goshe\Documents\Projects\eitri\GoshenJimenez.Eitri\GoshenJimenez.Eitri\obj\Debug\netcoreapp2.0\GoshenJimenez.Eitri.pdb

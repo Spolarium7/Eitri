@@ -1,0 +1,179 @@
+﻿@model GoshenJimenez.Eitri.Models.SaveFileViewModel;
+
+
+<div class="col-md-3 form-horizontal">
+    <form class="form-horizontal form-material" id="loginform" method="post" action="~/home/save-file">
+        <h3 class="box-title m-b-20 m-t-20 text-info text-center">Save File</h3>
+            <div class="form-group">
+                <div class="col-xs-12">
+                    <style>
+                        .thumb {
+                            height: 75px;
+                            border: 1px solid #000;
+                            margin: 10px 5px 0 0;
+                        }
+
+                        #drop_zone {
+                            border: 2px dashed #bbb;
+                            -moz-border-radius: 5px;
+                            -webkit-border-radius: 5px;
+                            border-radius: 5px;
+                            padding: 25px;
+                            text-align: center;
+                            font: 20pt bold 'Vollkorn';
+                            color: #bbb;
+                        }
+                    </style>
+                    <div id="drop_zone" asp-for="File">Drop the file here</div>
+                    <input type="hidden" asp-for="FileData" id="fileData" />
+                    <input type="hidden" asp-for="FileType" id="fileType" />
+                    <input type="hidden" asp-for="FileSize" id="fileSize" />
+                    <input type="hidden" asp-for="LastModifiedDate" id="lastModifiedDate" />
+                    <input type="hidden" asp-for="FileName" id="fileName" />
+                </div>
+            </div>
+        <div class="col-xs-12">
+            <button class="btn btn-info btn-md btn-block text-uppercase waves-effect waves-light" type="submit">Save</button>
+        </div>
+    </form>
+</div>
+<div class="col-md-9 form-horizontal">
+    <h3 class="box-title m-b-20 m-t-20 text-info text-center">File List</h3>
+
+    @foreach (FileNamePair file in Model.Files)
+    {
+        <div><a href="#" onclick="requestFile('@file.SaveName','@file.FileName')">@file.FileName</a></div>
+    }
+
+
+    <h3 class="box-title m-b-20 m-t-20 text-info text-center">File Details</h3>
+    <div style="border: 2px dashed #bbb;" id="fileDetails">
+        FileName: <span id="contentFileName"></span><br />
+        Type: <span id="contentFileType"></span><br />
+        Size: <span id="contentFileSize"></span><br />
+        Last Modified: <span id="contentLastModifiedDate" />
+    </div>
+    <h3 class="box-title m-b-20 m-t-20 text-info text-center">Download Link</h3>
+    <div style="border: 2px dashed #bbb;" id="fileContents">
+
+    </div>
+
+</div>
+
+@section Scripts{
+    <script>
+        function handleFileSelect(evt) {
+            evt.stopPropagation();
+            evt.preventDefault();
+            var files = evt.dataTransfer.files; // FileList object
+
+            var file = files[0];
+            var reader = new FileReader();
+            var data = "";
+            // Closure to capture the file information.
+            reader.onload = (function (theFile) {
+                return function (e) {                        
+                    $('#fileData').val(encrypt(e.target.result));
+                };
+            })(file);
+            reader.readAsDataURL(file);
+            $('#drop_zone').html(file.name + " (" + file.size + " bytes)");
+            $('#fileSize').val(file.size);
+            $('#lastModifiedDate').val(file.lastModifiedDate);
+            $('#fileName').val(file.name);
+            $('#fileType').val(file.type);
+        }
+
+        function handleDragOver(evt) {
+            evt.stopPropagation();
+            evt.preventDefault();
+            evt.dataTransfer.dropEffect = 'copy'; // Explicitly show this is a copy.
+        }
+
+        function requestFile(saveName, fileName) {
+            $.get("/file/" + saveName, function (data) {
+                $('#contentFileSize').html(data.fileSize);
+                $('#contentLastModifiedDate').html(data.lastModifiedDate);
+                $('#contentFileName').html(data.fileName);
+                $('#contentFileType').html(data.fileType);
+
+                //FOR SHOWING DATA
+                //if (data.fileType.match('image.*')) {
+                //    var img = document.createElement('img');
+                //    img.src = decrypt(data.fileData);
+                //    var myNode = document.getElementById("fileContents");
+                //    while (myNode.firstChild) {
+                //        myNode.removeChild(myNode.firstChild);
+                //    }
+                //    document.getElementById('fileContents').insertBefore(img, null);
+                //} else { 
+                //    var span = document.createElement('span');
+                //    var str = decrypt(data.fileData).split(',')[1];
+                //    span.innerHTML = atob(str);           
+                //    var myNode = document.getElementById("fileContents");
+                //    while (myNode.firstChild) {
+                //        myNode.removeChild(myNode.firstChild);
+                //    }
+                //    document.getElementById('fileContents').insertBefore(span, null);
+                //}
+                var a = document.createElement('a');
+                var decrypted = decrypt(data.fileData);
+                var blob = b64toBlob(decrypted.split(',')[1], decrypted.split(',')[0]);
+                var blobURL = URL.createObjectURL(blob);
+
+                a.href = blobURL;
+                a.innerText = "download " + fileName;
+          
+                    var myNode = document.getElementById("fileContents");
+                    while (myNode.firstChild) {
+                        myNode.removeChild(myNode.firstChild);
+                    }
+                    document.getElementById('fileContents').insertBefore(a, null);
+
+                
+            });
+        }
+
+        function b64toBlob(b64Data, contentType, sliceSize) {
+            contentType = contentType || '';
+            sliceSize = sliceSize || 512;
+
+            var byteCharacters = atob(b64Data);
+            var byteArrays = [];
+
+            for (var offset = 0; offset < byteCharacters.length; offset += sliceSize) {
+                var slice = byteCharacters.slice(offset, offset + sliceSize);
+
+                var byteNumbers = new Array(slice.length);
+                for (var i = 0; i < slice.length; i++) {
+                    byteNumbers[i] = slice.charCodeAt(i);
+                }
+
+                var byteArray = new Uint8Array(byteNumbers);
+
+                byteArrays.push(byteArray);
+            }
+
+            var blob = new Blob(byteArrays, { type: contentType });
+            return blob;
+        }
+
+        // Setup the dnd listeners.
+        var dropZone = document.getElementById('drop_zone');
+        dropZone.addEventListener('dragover', handleDragOver, false);
+        dropZone.addEventListener('drop', handleFileSelect, false);
+
+        function encrypt(input) {
+            var en = new pidCrypt.AES.CBC();
+            en.encryptText(input, "secret", { nBits: 256 });
+            return en.pidcrypt.getParams().dataOut;
+        }
+
+        function decrypt(input) {
+            var de = new pidCrypt.AES.CBC();
+            de.decryptText(input, "secret", { nBits: 256 });
+            console.log(de.pidcrypt.getParams());
+            return de.pidcrypt.getParams().dataOut;
+        }
+    </script>
+}
