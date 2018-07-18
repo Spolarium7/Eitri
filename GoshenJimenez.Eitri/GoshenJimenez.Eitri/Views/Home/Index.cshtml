@@ -24,6 +24,7 @@
                             color: #bbb;
                         }
                     </style>
+                    Token: <input type="text" id="token" value="secret"/><br/><br />
                     <div id="drop_zone" asp-for="File">Drop the file here</div>
                     <input type="hidden" asp-for="FileData" id="fileData" />
                     <input type="hidden" asp-for="FileType" id="fileType" />
@@ -118,19 +119,23 @@
                 //}
                 var a = document.createElement('a');
                 var decrypted = decrypt(data.fileData);
-                var blob = b64toBlob(decrypted.split(',')[1], decrypted.split(',')[0]);
-                var blobURL = URL.createObjectURL(blob);
+                try {
+                    var blob = b64toBlob(decrypted.split(',')[1], decrypted.split(',')[0]);
+                    var blobURL = URL.createObjectURL(blob);
 
-                a.href = blobURL;
-                a.innerText = "download " + fileName;
-          
+                    a.href = blobURL;
+                    a.innerText = "download " + fileName;
+                    a.download = fileName;
+
                     var myNode = document.getElementById("fileContents");
                     while (myNode.firstChild) {
                         myNode.removeChild(myNode.firstChild);
                     }
                     document.getElementById('fileContents').insertBefore(a, null);
 
-                
+                }catch{
+                    alert("data unavailable : invalid decrypt token");
+                }
             });
         }
 
@@ -165,15 +170,24 @@
 
         function encrypt(input) {
             var en = new pidCrypt.AES.CBC();
-            en.encryptText(input, "secret", { nBits: 256 });
+            en.encryptText(input, getToken(), { nBits: 256 });
             return en.pidcrypt.getParams().dataOut;
         }
 
         function decrypt(input) {
             var de = new pidCrypt.AES.CBC();
-            de.decryptText(input, "secret", { nBits: 256 });
-            console.log(de.pidcrypt.getParams());
+            de.decryptText(input, getToken(), { nBits: 256 });
+            //console.log(de.pidcrypt.getParams());
             return de.pidcrypt.getParams().dataOut;
+        }
+
+        function getToken() {
+            if (/\S/.test($("#token").val())) {
+                return $("#token").val();
+            } else {
+                $("#token").val("secret");
+                return "secret";
+            }
         }
     </script>
 }

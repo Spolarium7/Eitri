@@ -1,1 +1,0 @@
-{"FileData":"U2FsdGVkX19IcHsII4KalMng25U/sF12qK+c6lfl6jyAxIWrXm+bVnHOX41J46SRuV9REpzdG+GgloKJyUGycA==","FileType":"text/plain","FileSize":9,"LastModifiedDate":"Tue Jul 17 2018 22:30:15 GMT+0800 (Taipei Standard Time)","FileName":"thisNewFile.txt"}
