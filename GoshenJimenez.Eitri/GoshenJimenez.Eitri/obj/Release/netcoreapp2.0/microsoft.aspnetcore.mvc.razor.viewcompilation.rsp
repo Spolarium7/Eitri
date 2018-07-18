@@ -1,0 +1,11 @@
+C:\Users\goshe\Documents\Projects\eitri\GoshenJimenez.Eitri\GoshenJimenez.Eitri
+--output-path=obj\Release\netcoreapp2.0\
+--application-name=GoshenJimenez.Eitri
+--content-root=C:\Users\goshe\Documents\Projects\eitri\GoshenJimenez.Eitri\GoshenJimenez.Eitri
+--file=C:\Users\goshe\Documents\Projects\eitri\GoshenJimenez.Eitri\GoshenJimenez.Eitri\Views\Home\File.cshtml
+--file=C:\Users\goshe\Documents\Projects\eitri\GoshenJimenez.Eitri\GoshenJimenez.Eitri\Views\Home\Index.cshtml
+--file=C:\Users\goshe\Documents\Projects\eitri\GoshenJimenez.Eitri\GoshenJimenez.Eitri\Views\Shared\Error.cshtml
+--file=C:\Users\goshe\Documents\Projects\eitri\GoshenJimenez.Eitri\GoshenJimenez.Eitri\Views\Shared\_Layout.cshtml
+--file=C:\Users\goshe\Documents\Projects\eitri\GoshenJimenez.Eitri\GoshenJimenez.Eitri\Views\Shared\_ValidationScriptsPartial.cshtml
+--file=C:\Users\goshe\Documents\Projects\eitri\GoshenJimenez.Eitri\GoshenJimenez.Eitri\Views\_ViewImports.cshtml
+--file=C:\Users\goshe\Documents\Projects\eitri\GoshenJimenez.Eitri\GoshenJimenez.Eitri\Views\_ViewStart.cshtml
